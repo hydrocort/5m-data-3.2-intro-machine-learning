@@ -1,8 +1,4 @@
-I'll help you understand the models discussed in the lesson notebook. Let me read through the notebook to analyze the different models and their use cases.
-
-[1 tool called]
-
-Based on my review of the lesson notebook "supervised_learning_1_lesson_addendum", I can help you understand the three main models discussed and when to use each one. Let me break down each model:
+Based on the lesson notebook "supervised_learning_1_lesson_addendum", below is an overview of the three main models discussed and when to use each one.
 
 ## 1. Linear Regression
 
@@ -25,6 +21,12 @@ Based on my review of the lesson notebook "supervised_learning_1_lesson_addendum
 
 **Training method:** Uses Ordinary Least Squares (OLS) or Gradient Descent to minimize Mean Squared Error (MSE)
 
+**Data Scaling:**
+- **Generally NOT critical** for OLS-based linear regression
+- **CRITICAL** when using Gradient Descent optimization
+- **Why:** OLS is scale-invariant (coefficients automatically adjust), but Gradient Descent converges faster with scaled features
+- **Recommendation:** Scale when using regularization (Ridge/Lasso) or when features have vastly different units (e.g., age vs. income)
+
 ## 2. Logistic Regression
 
 **What it is:**
@@ -43,6 +45,12 @@ Based on my review of the lesson notebook "supervised_learning_1_lesson_addendum
 **Training method:** Uses Maximum Likelihood Estimation to find optimal coefficients
 
 **Key advantage:** Outputs probabilities (0-1) rather than just class labels
+
+**Data Scaling:**
+- **CRITICAL** for logistic regression
+- **Why:** Uses optimization algorithms (like Gradient Descent) that are sensitive to feature scales
+- **Impact:** Features with larger scales dominate the cost function, leading to poor convergence and biased coefficients
+- **Recommendation:** Always use StandardScaler or MinMaxScaler before training logistic regression models
 
 ## 3. K-Nearest Neighbors (K-NN)
 
@@ -64,6 +72,13 @@ Based on my review of the lesson notebook "supervised_learning_1_lesson_addendum
 - **Small k:** More sensitive to noise, captures local patterns, higher variance
 - **Large k:** More stable, smoother decision boundaries, higher bias
 - **Distance metrics:** Usually Euclidean distance, but can use Manhattan or Minkowski
+
+**Data Scaling:**
+- **ABSOLUTELY CRITICAL** for K-NN
+- **Why:** Algorithm relies entirely on distance calculations between data points
+- **Impact:** Features with larger scales will dominate distance calculations, making the algorithm essentially ignore smaller-scale features
+- **Example:** Without scaling, a feature like "income" ($50,000) will overwhelm "age" (25 years) in distance calculations
+- **Recommendation:** Always use StandardScaler or MinMaxScaler - this is non-negotiable for K-NN
 
 ## When to Use Which Model?
 
